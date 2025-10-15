@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Services\AuthService;
 use Illuminate\Http\Request;
-use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Session;
+
 
 class AuthController extends Controller
 {
@@ -15,7 +17,12 @@ class AuthController extends Controller
         $this->authService = $authService;
     }
 
-    public function login(Request $request): JsonResponse
+    public function view()
+    {
+        return view('auth.login');
+    }
+
+    public function login(Request $request): RedirectResponse
     {
         $validated = $request->validate([
             'unique_code' => 'required|string',
@@ -24,19 +31,19 @@ class AuthController extends Controller
 
         try {
             $result = $this->authService->login($validated);
-            return response()->json($result);
+            Session::put('user', $result['user']);
+            return redirect()->route('pages.home')->with('success', 'Login berhasil!');
         } catch (\Illuminate\Validation\ValidationException $e) {
-            return response()->json([
-                'message' => 'Login gagal',
-                'errors' => $e->errors(),
-            ], 401);
+            return back()->withErrors([
+                'login_error' => 'Kode unik atau password salah.'
+            ])->withInput();
         }
     }
 
-    public function logout(Request $request): JsonResponse
+    public function logout(Request $request): RedirectResponse
     {
         $user = $request->user();
         $result = $this->authService->logout($user);
-        return response()->json($result);
+        return redirect()->route('login')->with('success', 'Anda telah logout.');
     }
 }
