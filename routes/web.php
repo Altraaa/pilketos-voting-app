@@ -28,3 +28,11 @@ Route::get('/tentang-kami', function () {
         'title' => 'Tentang Kami',
     ]);
 })->name('about');
+
+
+// hasil vote
+Route::get('/hasil-vote', function () {
+    return view('pages.vote', [
+        'title' => 'Hasil Vote',
+    ]);
+})->name('pages.vote');

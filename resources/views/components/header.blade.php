@@ -14,6 +14,7 @@
     /* Tambahkan padding-top untuk konten agar tidak tertutup header */
     body {
         padding-top: 60px;
+        font-family: "Poppins", sans-serif;
     }
     
     /* Pastikan semua elemen tidak melebihi lebar layar */
@@ -44,7 +45,7 @@
         <!-- Navigasi Desktop -->
         <nav class="d-none d-md-flex gap-4 align-items-center" style="flex-shrink: 0;">
             <a href="/" class="text-white text-decoration-none hover-link text-nowrap">Beranda</a>
-            <a href="/" class="text-white text-decoration-none hover-link text-nowrap">Hasil Vote</a>
+            <a href="/hasil-vote" class="text-white text-decoration-none hover-link text-nowrap">Hasil Vote</a>
             <a href="{{ route('about') }}" class="text-white text-decoration-none hover-link text-nowrap">Tentang Kami</a>
         </nav> 
     </div>
