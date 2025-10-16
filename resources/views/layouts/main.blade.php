@@ -4,19 +4,87 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'OSIS SKENSA')</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    
+    <style>
+        /* Prevent horizontal scroll */
+        html, body {
+            overflow-x: hidden !important;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            max-width: 100vw;
+            box-sizing: border-box;
+        }
+        
+        /* Global box-sizing */
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+        
+        /* Body styling */
+        body {
+            background-color: #0b1b38;
+            color: #ffffff;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            padding-top: 60px; /* Space untuk fixed header */
+        }
+        
+        /* Container fix */
+        .container, .container-fluid {
+            max-width: 100%;
+            overflow-x: hidden;
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+        
+        /* Row fix */
+        .row {
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+        }
+        
+        /* Main content */
+        main {
+            min-height: calc(100vh - 60px); /* Minus header height */
+            width: 100%;
+            max-width: 100vw;
+            overflow-x: hidden;
+        }
+        
+        /* Image responsiveness */
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
 </head>
 
-<body class="bg-[#0b1b38] text-white font-sans">
+<body>
     {{-- Header --}}
     @include('components.header')
 
     {{-- Konten Halaman --}}
-    <main class="min-h-screen">
+    <main>
         @yield('content')
     </main>
 
     {{-- Footer --}}
     @include('components.footer')
+    
+    <!-- Bootstrap JS Bundle (termasuk Popper) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

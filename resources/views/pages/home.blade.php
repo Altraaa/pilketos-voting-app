@@ -1,44 +1,112 @@
 @extends('layouts.main')
 
-@section('title', 'Kandidat Ketua OSIS 2025')
+@section('title', 'Pemilihan Ketua OSIS 2025')
 
 @section('content')
-<section class="pt-24 pb-10">
-    <div class="text-center">
-        <h1 class="text-2xl font-bold mb-2">Pemilihan Ketua OSIS 2025</h1>
-        <p class="text-sm text-gray-300">Suaramu Menentukan Masa Depan Organisasi Kita</p>
-    </div>
+<style>
+  body {
+    background-color: #0b1a3a;
+    color: white;
+    font-family: "Poppins", sans-serif;
+  }
 
-    <div class="mt-10 text-center">
-        <h2 class="text-xl font-semibold underline mb-4">Tata Cara Pemilihan</h2>
-        <div class="bg-[#11224e] max-w-md mx-auto text-left rounded-xl p-5 space-y-2 text-sm">
-            <ol class="list-decimal list-inside space-y-1">
-                <li>Setiap siswa berhak memberikan 1 suara untuk 1 kandidat pilihan</li>
-                <li>Pemilihan dilaksanakan secara online melalui website ini</li>
-                <li>Klik tombol <b>“Vote Sekarang”</b> pada kandidat pilihan anda</li>
-                <li>Konfirmasi pilihan anda dan tunggu hasil akhir</li>
-                <li>Voting dibuka mulai 28 Oktober - 5 November 2025</li>
-            </ol>
-        </div>
-    </div>
+  /* Hero Section */
+  .hero {
+    background: url('{{ asset('images/dashboard.jpg') }}') center center / cover no-repeat;
+    position: relative;
+    text-align: center;
+    color: white;
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 
-    {{-- Daftar Kandidat --}}
-    <div class="max-w-2xl mx-auto mt-10 space-y-8">
-        <div class="bg-[#122957] rounded-2xl overflow-hidden">
-            <img src="{{ asset('images/candidate1.jpg') }}" alt="Kandidat 1" class="w-full h-60 object-cover">
-            <div class="p-5">
-                <h3 class="font-bold text-lg">Ni Komang Onny Fridayanti</h3>
-                <p class="text-sm text-green-400 mb-2">Calon Ketua OSIS</p>
-                <h4 class="font-semibold">Visi</h4>
-                <p class="text-sm text-gray-300">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                <h4 class="mt-2 font-semibold">Misi</h4>
-                <ul class="list-decimal list-inside text-sm text-gray-300 space-y-1">
-                    <li>Meningkatkan semangat belajar siswa</li>
-                    <li>Menumbuhkan kreativitas di lingkungan sekolah</li>
-                </ul>
-                <button class="mt-4 bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-5 rounded-full w-full">Pilih Sekarang</button>
-            </div>
-        </div>
+  .hero::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+  }
+
+  .countdown .time-box {
+    background: #061128;
+    border-radius: 8px;
+    padding: 10px 15px;
+    margin: 5px;
+    display: inline-block;
+    font-size: 1rem;
+    min-width: 60px;
+  }
+
+  .section-title {
+    text-align: center;
+    font-weight: 700;
+    margin-top: 60px;
+    margin-bottom: 20px;
+    position: relative;
+  }
+
+  .section-title::after {
+    content: "";
+    display: block;
+    width: 80px;
+    height: 3px;
+    background-color: #0d6efd;
+    margin: 10px auto 0;
+  }
+
+  .card-custom {
+    background-color: #1b2b54;
+    border-radius: 20px;
+    color: #fff;
+    padding: 25px;
+  }
+</style>
+
+<!-- Hero Section -->
+<section class="hero">
+  <div class="hero-content">
+    <h2 class="fw-bold">Pemilihan Ketua OSIS 2025</h2>
+    <p class="text-white-50">Suaramu Menentukan Masa Depan Organisasi Kita</p>
+
+    <div class="countdown mt-3 d-flex justify-content-center">
+      <div class="time-box">
+        <span id="days">08</span><br><small>Hari</small>
+      </div>
+      <div class="time-box">
+        <span id="hours">23</span><br><small>Jam</small>
+      </div>
+      <div class="time-box">
+        <span id="minutes">50</span><br><small>Menit</small>
+      </div>
+      <div class="time-box">
+        <span id="seconds">30</span><br><small>Detik</small>
+      </div>
     </div>
+  </div>
+</section>
+
+<!-- Tata Cara Section -->
+<section class="container">
+  <h3 class="section-title">Tata Cara Pemilihan</h3>
+  <div class="card-custom mx-auto mb-5" style="max-width: 700px;">
+    <ol class="mb-0">
+      <li>Setiap siswa berhak memberikan 1 suara untuk 1 kandidat pilihan</li>
+      <li>Pemilihan dilaksanakan secara online melalui website ini</li>
+      <li>Klik tombol "Vote Sekarang" pada kandidat pilihan Anda</li>
+      <li>Konfirmasi pilihan Anda pada popup yang muncul</li>
+      <li>Suara yang sudah diberikan tidak dapat diubah</li>
+      <li>Hasil pemilihan akan diumumkan setelah periode voting berakhir</li>
+      <li>Voting dibuka mulai tanggal 28 Oktober – 5 November 2025</li>
+    </ol>
+  </div>
 </section>
 @endsection

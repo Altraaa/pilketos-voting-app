@@ -3,8 +3,15 @@
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
-// landing page
-Route::get('/', [AuthController::class, 'view'])->name('login');
+// langsung ke halaman home
+Route::get('/', function () {
+    return view('pages.home', [
+        'title' => 'Dashboard',
+    ]);
+})->name('home');
+
+// login (kalau nanti mau diaktifin lagi)
+Route::get('/login', [AuthController::class, 'view'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.post');
 Route::post('/logout', [AuthController::class, 'logout']);
 
@@ -14,3 +21,10 @@ Route::get('/home', function () {
         'title' => 'Dashboard',
     ]);
 })->name('pages.home');
+
+// tentang kami
+Route::get('/tentang-kami', function () {
+    return view('pages.about', [
+        'title' => 'Tentang Kami',
+    ]);
+})->name('about');
