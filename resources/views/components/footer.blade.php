@@ -1,4 +1,4 @@
-<footer class="text-white mt-5" style="background-color: #08142b; border-top: 2px solid #0094FF; overflow-x: hidden;">
+<footer class="text-white mt-5" style="background-color: #08142b; overflow-x: hidden;">
     <div class="container py-5 px-3">
 
         <div class="row g-4 mx-0"> <!-- Hilangkan negative margin dengan mx-0 -->
@@ -28,7 +28,7 @@
 
                 <div class="mb-3">
                     <p class="mb-1 fw-semibold" style="font-size: 0.9rem;">Kontak:</p>
-                    <p class="text-light mb-0" style="font-size: 0.85rem; opacity: 0.9;">lorem ipsum</p>
+                    <p class="text-light mb-0" style="font-size: 0.85rem; opacity: 0.9;">089524606163 (Wibawa)</p>
                 </div>
 
                 <div>
@@ -42,9 +42,8 @@
                 <h6 class="fw-semibold mb-3">Navigasi</h6>
                 <ul class="list-unstyled d-grid gap-2 mb-0" style="font-size: 0.95rem;">
                     <li><a href="/" class="text-white text-decoration-none footer-link">Beranda</a></li>
-                    <li><a href="/kandidat" class="text-white text-decoration-none footer-link">Kandidat</a></li>
                     <li><a href="/hasil-vote" class="text-white text-decoration-none footer-link">Hasil Vote</a></li>
-                    <li><a href="/tentang-kami" class="text-white text-decoration-none footer-link">Tentang Kami</a></li>
+                    <li><a href="{{ route('about') }}" class="text-white text-decoration-none footer-link">Tentang Kami</a></li>
                 </ul>
             </div>
 
