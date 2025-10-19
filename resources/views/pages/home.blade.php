@@ -28,7 +28,7 @@
 </section>
 
 
-<!-- Tata Cara Pemilihan Section -->
+<!-- Tata Cara -->
 <section class="tata-cara py-5">
   <div class="container text-center">
     <h3 class="fw-bold mb-2">Tata Cara Pemilihan</h3>
@@ -55,12 +55,10 @@
     <div class="underline mx-auto mb-4"></div>
 
     <div class="row justify-content-center g-4">
-      <!-- Card 1 -->
       <div class="col-md-5">
         <div class="card shadow rounded-3 overflow-hidden position-relative">
           <div class="position-relative">
             <img src="images/dashboard.jpg" class="card-img-top" alt="...">
-            <!-- Nomor Kandidat -->
             <div class="nomor-kandidat">1</div>
           </div>
           <div class="card-body">
@@ -84,12 +82,10 @@
         </div>
       </div>
 
-      <!-- Card 2 -->
       <div class="col-md-5">
         <div class="card shadow rounded-3 overflow-hidden position-relative">
           <div class="position-relative">
             <img src="images/dashboard.jpg" class="card-img-top" alt="...">
-            <!-- Nomor Kandidat -->
             <div class="nomor-kandidat">2</div>
           </div>
           <div class="card-body">
@@ -116,8 +112,6 @@
   </div>
 </section>
 
-
-<!-- Modal Konfirmasi -->
  
 <div class="modal fade" id="konfirmasiModal" tabindex="-1" aria-labelledby="konfirmasiLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
@@ -339,7 +333,8 @@
     background-color: #0d2a65;
   }
 
-  /* ===== RESPONSIVE DESIGN ===== */
+  
+
   @media (max-width: 992px) {
     .hero {
       height: 60vh;
@@ -438,9 +433,5 @@
     }
   }
 </style>
-
-
-
-
 
 @endsection
