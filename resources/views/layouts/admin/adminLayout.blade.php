@@ -33,12 +33,45 @@
     }
 
     .sidebar .logo {
-      font-weight: 700;
-      font-size: 1.3rem;
-      color: #38bdf8;
-      text-align: center;
-      margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    margin-bottom: 2rem;
+    text-align: center;
     }
+
+    .sidebar .logo-img {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 0 8px rgba(56, 189, 248, 0.3);
+    }
+
+    .sidebar .logo-text {
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: #38bdf8;
+    letter-spacing: 0.5px;
+    }
+
+    @media (max-width: 992px) {
+    .sidebar .logo {
+        justify-content: flex-start;
+        margin-left: 0.5rem;
+    }
+
+    .sidebar .logo-img {
+        width: 30px;
+        height: 30px;
+    }
+
+    .sidebar .logo-text {
+        font-size: 1.1rem;
+    }
+    }
+
 
     .sidebar a {
       display: flex;
