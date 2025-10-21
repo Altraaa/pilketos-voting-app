@@ -34,4 +34,11 @@ Route::middleware('auth')->group(function () {
             'title' => 'Hasil Vote',
         ]);
     })->name('pages.vote');
+
+    Route::prefix('admin')->name('admin.')->group(function () {
+        Route::get('/dashboard', fn() => view('admin.dashboard', ['title' => 'Dashboard']))->name('dashboard');
+        Route::get('/candidate', fn() => view('admin.candidate', ['title' => 'Candidate']))->name('candidate');
+        Route::get('/result', fn() => view('admin.result', ['title' => 'Vote Result']))->name('result');
+        Route::get('/user', fn() => view('admin.users', ['title' => 'User Management']))->name('user');
+    });
 });
