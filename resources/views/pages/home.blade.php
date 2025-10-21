@@ -142,7 +142,7 @@
     position: relative;
     text-align: center;
     color: white;
-    height: 80vh;
+    height: 90vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
