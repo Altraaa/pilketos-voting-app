@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Services\AuthService;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
@@ -33,6 +34,8 @@ class AuthController extends Controller
             session(['token' => $result['token']]);
             session(['user' => $result['user']]);
 
+            Auth::loginUsingId($result['user']['id']);
+
             return redirect()->route('home')->with('success', 'Login berhasil!');
 
         } catch (\Illuminate\Validation\ValidationException $e) {
@@ -46,11 +49,12 @@ class AuthController extends Controller
         }
     }
 
-    public function logout(Request $request): RedirectResponse
+    public function logout()
     {
-        $user = $request->user();
-        $this->authService->logout($user);
-        $request->session()->flush();
+        Auth::logout();
+        request()->session()->invalidate();
+        request()->session()->regenerateToken();
+        
         return redirect()->route('login')->with('success', 'Logout berhasil!');
     }
 }
