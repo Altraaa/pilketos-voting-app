@@ -22,6 +22,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/candidates', [CandidateController::class, 'store']);
     Route::get('/candidates/{id}', [CandidateController::class, 'show']);
     Route::put('/candidates/{id}', [CandidateController::class, 'update']);
+    Route::post('candidates/{id}/upload-image', [CandidateController::class, 'uploadImage']);
     Route::delete('/candidates/{id}', [CandidateController::class, 'destroy']);
     
     // Vote Routes
