@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('candidates', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->text('desc');
             $table->string('class');
             $table->text('vision')->nullable();     
             $table->text('mission')->nullable();    

@@ -27,6 +27,7 @@ class CandidateController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
+            'desc' => 'required|string',
             'class' => 'required|string|max:100',
             'vision' => 'required|string',
             'mission' => 'required|string',
@@ -52,6 +53,7 @@ class CandidateController extends Controller
     {
         $validated = $request->validate([
             'name' => 'sometimes|string|max:255',
+            'desc' => 'sometimes|string',
             'class' => 'sometimes|string|max:100',
             'vision' => 'sometimes|string',
             'mission' => 'sometimes|string',

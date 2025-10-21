@@ -9,7 +9,7 @@ class Candidate extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'class', 'vision', 'mission', 'image', 'total_votes'];
+    protected $fillable = ['name', 'desc', 'class', 'vision', 'mission', 'image', 'total_votes'];
 
     public function votes()
     {
