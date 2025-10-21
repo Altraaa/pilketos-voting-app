@@ -18,7 +18,7 @@
         .login-container {
             background: linear-gradient(135deg, #2d3f5f 0%, #3a5270 100%);
             border-radius: 24px;
-            padding: 40px 30px;
+            padding: 60px 40px;
             width: 100%;
             max-width: 380px;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
@@ -43,8 +43,6 @@
 
         .login-title {
             color: #ffffff;
-            font-size: 22px;
-            font-weight: 600;
             margin-bottom: 8px;
         }
 
@@ -133,15 +131,15 @@
     @include('components.toast')
 
     {{-- Konten Halaman --}}
-    <main class="min-h-screen">
+    <main class="min-h-screen flex items-center">
         @yield('content')
-        <section class="pt-24 pb-10">
+        <section>
             <div class="login-container">
                 <div class="logo-container">
                     <div class="logo">
                         <img src="{{ asset('images/logo.png') }}" alt="LOGO OSKA" class="w-60">
                     </div>
-                    <h1 clas="login-title">Login Diperlukan</h1>
+                    <h2 class="login-title">Login Diperlukan</h2>
                     <p class="login-subtitle">Masukkan <span>Kode</span> dan <span>Kata Sandi</span> untuk masuk</p>
                 </div>
                 @if($errors->any())
