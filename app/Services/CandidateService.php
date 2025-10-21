@@ -7,6 +7,13 @@ use Illuminate\Support\Facades\Storage;
 
 class CandidateService
 {
+    protected $uploadImageService;
+
+    public function __construct(UploadImageService $uploadImageService)
+    {
+        $this->uploadImageService = $uploadImageService;
+    }
+
     public function getAllCandidates()
     {
         return Candidate::all();
@@ -33,13 +40,27 @@ class CandidateService
     {
         $candidate = Candidate::findOrFail($id);
 
-        // Untuk Hapus Image (Soon Function)
-        if ($candidate->image && Storage::exists($candidate->image)) {
-            Storage::delete($candidate->image);
+        if ($candidate->image && Storage::disk('public')->exists($candidate->image)) {
+            Storage::disk('public')->delete($candidate->image);
         }
 
         $candidate->delete();
 
         return ['message' => 'Candidate deleted successfully'];
+    }
+
+    public function uploadCandidateImage(int $candidateId, $imageFile)
+    {
+        $candidate = $this->findCandidate($candidateId);
+        
+        if ($candidate->image) {
+            $this->uploadImageService->delete($candidate->image);
+        }
+
+        $imagePath = $this->uploadImageService->upload($imageFile);
+        
+        $candidate->update(['image' => $imagePath]);
+        
+        return $candidate;
     }
 }
