@@ -48,6 +48,15 @@
             <a href="/hasil-vote" class="text-white text-decoration-none hover-link text-nowrap">Hasil Vote</a>
             <a href="{{ route('about') }}" class="text-white text-decoration-none hover-link text-nowrap">Tentang Kami</a>
         </nav> 
+        @if(Auth::check())
+            <form id="logoutForm" action="{{ route('logout') }}" method="POST" class="m-0">
+                @csrf
+                <button type="button" id="logoutBtn" class="btn text-white d-flex align-items-center gap-2 border-0">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    <span class="d-none d-md-inline">Logout</span>
+                </button>
+            </form>
+        @endif
     </div>
 </header>
 
@@ -113,6 +122,8 @@
     }
 </style>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <script>
     const menuToggle = document.getElementById('menu-toggle');
     const mobileMenu = document.getElementById('mobile-menu');
@@ -167,5 +178,39 @@
         if (linkPath === currentPath) {
             link.classList.add('active');
         }
-    });
+    });
+    document.addEventListener('DOMContentLoaded', () => {
+        const logoutBtn = document.getElementById('logoutBtn');
+        const logoutForm = document.getElementById('logoutForm');
+
+        if (logoutBtn && logoutForm) {
+            logoutBtn.addEventListener('click', async (e) => {
+                e.preventDefault();
+
+                const result = await Swal.fire({
+                    title: 'Yakin ingin logout?',
+                    text: 'Kamu akan keluar dari akun ini.',
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Ya, logout',
+                    cancelButtonText: 'Batal'
+                });
+
+                if (result.isConfirmed) {
+                    Swal.fire({
+                        title: 'Keluar...',
+                        text: 'Sedang memproses logout kamu',
+                        allowOutsideClick: false,
+                        didOpen: () => {
+                            Swal.showLoading();
+                        }
+                    });
+
+                    logoutForm.submit();
+                }
+            });
+        }
+    });
 </script>
