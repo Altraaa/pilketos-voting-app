@@ -102,10 +102,35 @@
             font-size: 13px;
             margin-bottom: 20px;
         }
+
+        .spinner {
+            border: 3px solid rgba(255, 255, 255, 0.2);
+            border-top: 3px solid #fff;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            display: inline-block;
+            margin-left: 8px;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .alert-success {
+            background: #10b981;
+            color: #fff;
+            border: none;
+            box-shadow: 0 0 10px rgba(16, 185, 129, 0.4);
+        }
+
     </style>
 </head>
 
 <body class="bg-[#0b1b38] text-white font-sans">
+    @include('components.toast')
 
     {{-- Konten Halaman --}}
     <main class="min-h-screen">
@@ -116,38 +141,41 @@
                     <div class="logo">
                         <img src="{{ asset('images/logo.png') }}" alt="LOGO OSKA" class="w-60">
                     </div>
-                    <h1 clas="login-title">Masuk Diperlukan</h1>
+                    <h1 clas="login-title">Login Diperlukan</h1>
                     <p class="login-subtitle">Masukkan <span>Kode</span> dan <span>Kata Sandi</span> untuk masuk</p>
                 </div>
-                @if ($errors->has('login_error'))
-                <div class="alert alert-danger text-center">
-                    {{ $errors->first('login_error') }}
-                </div>
+                @if($errors->any())
+                    <div class="alert alert-danger">
+                        {{ $errors->first() }}
+                    </div>
                 @endif
-                <form action="{{ route('login.post') }}" method="POST">
+                <form id="loginForm" action="{{ route('login.post') }}" method="POST">
                     @csrf
                     <div class="mb-3">
                         <input type="text"
-                        placeholder="Kode"
-                        class="form-control @error('code') is-invalid @enderror"
-                        id="unique_code"
-                        name="unique_code"
-                        value="{{ old('unique_code') }}"
-                        required
-                        autofocus>
+                            placeholder="Kode"
+                            class="form-control @error('code') is-invalid @enderror"
+                            id="unique_code"
+                            name="unique_code"
+                            value="{{ old('unique_code') }}"
+                            required
+                            autofocus>
                     </div>
 
                     <div class="mb-4">
                         <input type="password"
-                        placeholder="Kata Sandi" 
-                        class="form-control @error('password') is-invalid @enderror"
-                        id="password"
-                        name="password"
-                        value="{{ old('password') }}"
-                        required>
+                            placeholder="Kata Sandi" 
+                            class="form-control @error('password') is-invalid @enderror"
+                            id="password"
+                            name="password"
+                            value="{{ old('password') }}"
+                            required>
                     </div>
 
-                    <button type="submit" class="btn btn-login" >Masuk</button>
+                    <button type="submit" class="btn btn-login" id="loginBtn">
+                        <span id="btnText">Masuk</span>
+                        <span id="loadingSpinner" class="spinner" style="display: none;"></span>
+                    </button>
                 </form>
             </div>
             
@@ -155,4 +183,27 @@
     </main>
 
 </body>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const form = document.getElementById('loginForm');
+        const btn = document.getElementById('loginBtn');
+        const btnText = document.getElementById('btnText');
+        const spinner = document.getElementById('loadingSpinner');
+        const alert = document.getElementById('successAlert');
+
+        form.addEventListener('submit', () => {
+            btn.disabled = true;
+            btnText.textContent = "Memproses...";
+            spinner.style.display = "inline-block";
+        });
+
+        if (alert) {
+            setTimeout(() => {
+                alert.style.transition = "opacity 0.5s ease";
+                alert.style.opacity = 0;
+                setTimeout(() => alert.remove(), 500);
+            }, 3000);
+        }
+    });
+</script>
 </html>
