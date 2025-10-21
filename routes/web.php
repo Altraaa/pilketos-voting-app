@@ -3,36 +3,35 @@
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
-// langsung ke halaman home
-Route::get('/', function () {
-    return view('pages.home', [
-        'title' => 'Dashboard',
-    ]);
-})->name('home');
+Route::middleware('guest')->group(function () {
+    Route::get('/login', [AuthController::class, 'view'])->name('login');
+    Route::post('/login', [AuthController::class, 'login'])->name('login.post');
+});
 
-// login (kalau nanti mau diaktifin lagi)
-Route::get('/login', [AuthController::class, 'view'])->name('login');
-Route::post('/login', [AuthController::class, 'login'])->name('login.post');
-Route::post('/logout', [AuthController::class, 'logout']);
+Route::middleware('auth')->group(function () {
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-// dashboard
-Route::get('/home', function () {
-    return view('pages.home', [
-        'title' => 'Dashboard',
-    ]);
-})->name('pages.home');
+    Route::get('/', function () {
+        return view('pages.home', [
+            'title' => 'Dashboard',
+        ]);
+    })->name('home');
 
-// tentang kami
-Route::get('/tentang-kami', function () {
-    return view('pages.about', [
-        'title' => 'Tentang Kami',
-    ]);
-})->name('about');
+    Route::get('/home', function () {
+        return view('pages.home', [
+            'title' => 'Dashboard',
+        ]);
+    })->name('pages.home');
 
+    Route::get('/tentang-kami', function () {
+        return view('pages.about', [
+            'title' => 'Tentang Kami',
+        ]);
+    })->name('about');
 
-// hasil vote
-Route::get('/hasil-vote', function () {
-    return view('pages.vote', [
-        'title' => 'Hasil Vote',
-    ]);
-})->name('pages.vote');
+    Route::get('/hasil-vote', function () {
+        return view('pages.vote', [
+            'title' => 'Hasil Vote',
+        ]);
+    })->name('pages.vote');
+});
