@@ -112,7 +112,7 @@
   </div>
 </section>
 
- 
+
 <div class="modal fade" id="konfirmasiModal" tabindex="-1" aria-labelledby="konfirmasiLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content bg-dark text-white rounded-4 shadow-lg border-0">
@@ -128,6 +128,31 @@
   </div>
 </div>
 
+<script>
+    const targetDate = new Date("2025-10-23T10:00:00+08:00").getTime();
+
+  const countdownInterval = setInterval(() => {
+    const now = new Date().getTime();
+    const distance = targetDate - now;
+
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    document.getElementById("days").innerText = days.toString().padStart(2, '0');
+    document.getElementById("hours").innerText = hours.toString().padStart(2, '0');
+    document.getElementById("minutes").innerText = minutes.toString().padStart(2, '0');
+    document.getElementById("seconds").innerText = seconds.toString().padStart(2, '0');
+
+    if (distance < 0) {
+      clearInterval(countdownInterval);
+      document.querySelector(".countdown").innerHTML = `
+        <h4 class="text-success fw-bold">🎉 Voting Telah Dibuka!</h4>
+      `;
+    }
+  }, 1000);
+</script>
 
 <style>
   body {
