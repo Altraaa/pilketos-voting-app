@@ -63,4 +63,15 @@ class AuthController extends Controller
 
         return redirect()->route('login')->with('success', 'Logout berhasil!');
     }
+
+    public function getToken(Request $request)
+    {
+        $token = session('token');
+        
+        if (!$token) {
+            return response()->json(['error' => 'Unauthenticated'], 401);
+        }
+        
+        return response()->json(['token' => $token]);
+    }
 }
