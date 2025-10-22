@@ -17,10 +17,17 @@ class CandidateController extends Controller
         $this->uploadImageService = $uploadImageService;
     }
 
-    public function index()
+    public function index(Request $request)
     {
         try {
-            $candidates = $this->candidateService->getAllCandidates();
+            $categoryId = $request->get('category_id');
+            
+            if ($categoryId) {
+                $candidates = $this->candidateService->getCandidatesByCategory($categoryId);
+            } else {
+                $candidates = $this->candidateService->getAllCandidates();
+            }
+            
             return response()->json([
                 'error' => false,
                 'message' => 'Berhasil menampilkan semua kandidat.',
@@ -44,6 +51,7 @@ class CandidateController extends Controller
                 'class' => 'required|string|max:100',
                 'vision' => 'required|string',
                 'mission' => 'required|string',
+                'category_id' => 'required|exists:categories,id',
                 'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
             ]);
 
@@ -95,6 +103,7 @@ class CandidateController extends Controller
                 'class' => 'sometimes|string|max:100',
                 'vision' => 'sometimes|string',
                 'mission' => 'sometimes|string',
+                'category_id' => 'sometimes|exists:categories,id',
                 'image' => 'sometimes|image|mimes:jpg,jpeg,png|max:2048',
             ]);
 
@@ -168,6 +177,25 @@ class CandidateController extends Controller
             return response()->json([
                 'error' => true,
                 'message' => 'Gagal mengunggah gambar: ' . $e->getMessage(),
+                'data' => null
+            ], 500);
+        }
+    }
+
+    public function byCategory($categoryId)
+    {
+        try {
+            $candidates = $this->candidateService->getCandidatesByCategory($categoryId);
+            
+            return response()->json([
+                'error' => false,
+                'message' => 'Berhasil menampilkan kandidat berdasarkan kategori.',
+                'data' => $candidates
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => true,
+                'message' => 'Gagal memuat data kandidat: ' . $e->getMessage(),
                 'data' => null
             ], 500);
         }
