@@ -16,7 +16,21 @@ class CandidateService
 
     public function getAllCandidates()
     {
-        return Candidate::all();
+        return Candidate::with('category')->get();
+    }
+
+    public function getCandidatesByCategory(int $categoryId)
+    {
+        return Candidate::with('category')
+            ->where('category_id', $categoryId)
+            ->get();
+    }
+
+    public function getCandidatesWithActiveCategories()
+    {
+        return Candidate::with(['category' => function($query) {
+            $query->where('is_active', true);
+        }])->get();
     }
 
     public function createCandidate(array $data)
@@ -26,14 +40,14 @@ class CandidateService
 
     public function findCandidate(int $id)
     {
-        return Candidate::findOrFail($id);
+        return Candidate::with('category')->findOrFail($id);
     }
 
     public function updateCandidate(int $id, array $data)
     {
         $candidate = Candidate::findOrFail($id);
         $candidate->update($data);
-        return $candidate;
+        return $candidate->load('category');
     }
 
     public function deleteCandidate(int $id)
@@ -61,6 +75,14 @@ class CandidateService
         
         $candidate->update(['image' => $imagePath]);
         
-        return $candidate;
+        return $candidate->load('category');
+    }
+
+    public function updateCandidateVotes(int $candidateId, int $voteCount = 1)
+    {
+        $candidate = Candidate::findOrFail($candidateId);
+        $candidate->increment('total_votes', $voteCount);
+        
+        return $candidate->load('category');
     }
 }
