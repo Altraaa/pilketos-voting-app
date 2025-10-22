@@ -1,10 +1,11 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\VoteResultsController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/get-token', [AuthController::class, 'getToken'])->name('get-token');
-
 
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'view'])->name('login');
@@ -32,16 +33,13 @@ Route::middleware('auth')->group(function () {
         ]);
     })->name('about');
 
-    Route::get('/hasil-vote', function () {
-        return view('pages.vote', [
-            'title' => 'Hasil Vote',
-        ]);
-    })->name('pages.vote');
+    Route::get('/hasil-vote', [VoteResultsController::class, 'index'])->name('pages.vote');
+    Route::get('/voting/results-api', [VoteResultsController::class, 'getResultsApi'])->name('voting.results.api');
+    Route::get('/users/export', [UserController::class, 'export'])->name('users.export');
+});
 
-    Route::prefix('admin')->name('admin.')->group(function () {
-        Route::get('/dashboard', fn() => view('admin.dashboard', ['title' => 'Dashboard']))->name('dashboard');
-        Route::get('/candidate', fn() => view('admin.candidate', ['title' => 'Candidate']))->name('candidate');
-        Route::get('/result', fn() => view('admin.result', ['title' => 'Vote Result']))->name('result');
-        Route::get('/user', fn() => view('admin.users', ['title' => 'User Management']))->name('user');
-    });
+Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/candidate', fn() => view('admin.candidate', ['title' => 'Candidate']))->name('candidate');
+    Route::get('/user', fn() => view('admin.users', ['title' => 'User Management']))->name('user');
+    Route::get('/category', fn() => view('admin.category', ['title' => 'Category']))->name('category');
 });
