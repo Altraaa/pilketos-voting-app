@@ -68,7 +68,7 @@
 </section>
 
 <script>
-const targetDate = new Date("2025-11-05T23:59:59+08:00").getTime();
+const targetDate = new Date("2025-10-23T10:00:00+08:00").getTime();
 let candidates = [];
 let updateInterval;
 
