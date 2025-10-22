@@ -16,13 +16,24 @@ class VoteController extends Controller
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'user_id' => 'required|exists:users,id',
-            'candidate_id' => 'required|exists:candidates,id',
-        ]);
+        try {
+            $validated = $request->validate([
+                'user_id' => 'required|exists:users,id',
+                'candidate_id' => 'required|exists:candidates,id',
+            ]);
 
-        $result = $this->voteService->vote($validated['user_id'], $validated['candidate_id']);
-        return response()->json($result, 201);
+            $result = $this->voteService->vote($validated['user_id'], $validated['candidate_id']);
+            return response()->json($result, 201);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return response()->json([
+                'message' => $e->getMessage(),
+                'errors' => $e->errors()
+            ], 422);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => $e->getMessage()
+            ], 400);
+        }
     }
 
     public function index()
