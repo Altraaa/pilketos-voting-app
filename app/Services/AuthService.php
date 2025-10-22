@@ -12,7 +12,7 @@ class AuthService
     {
         $user = User::where('unique_code', $credentials['unique_code'])->first();
 
-        if (!$user || !Hash::check($credentials['password'], $user->password)) {
+        if (!$user || $credentials['password'] !== $user->password) {
             throw ValidationException::withMessages([
                 'unique_code' => ['Kode unik atau password salah.'],
             ]);
