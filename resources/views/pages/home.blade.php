@@ -406,6 +406,7 @@ async function loadCandidates() {
   }
 }
 
+// Di fungsi displayCandidates, ubah cara mendapatkan nama kategori:
 function displayCandidates() {
   const container = document.getElementById('candidatesContainer');
   const loadingSpinner = document.getElementById('loadingSpinner');
@@ -428,8 +429,8 @@ function displayCandidates() {
   }
 
   container.innerHTML = candidates.map((candidate, index) => {
-    // Find candidate category
-    const category = categories.find(c => c.id === candidate.category_id);
+    // Gunakan candidate.category langsung dari data kandidat
+    const category = candidate.category;
     const categoryName = category ? category.name : 'Tidak ada kategori';
     
     return `
@@ -493,7 +494,7 @@ function formatMission(mission) {
 // Open vote confirmation modal
 function openVoteModal(candidateId) {
   if (!votingEnabled) {
-    showAlert('Voting saat belum di buka. Silakan tunggu waktu yang telah di tentukan.', 'warning');
+    showAlert('Voting saat ini nonaktif. Silakan tunggu admin mengaktifkan voting.', 'warning');
     return;
   }
   
@@ -502,8 +503,8 @@ function openVoteModal(candidateId) {
 
   selectedCandidateId = candidateId;
   
-  // Find candidate category
-  const category = categories.find(c => c.id === candidate.category_id);
+  // Gunakan candidate.category langsung dari data kandidat
+  const category = candidate.category;
   const categoryName = category ? category.name : 'Tidak ada kategori';
   
   document.getElementById('candidateInfo').innerHTML = `
