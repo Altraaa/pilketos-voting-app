@@ -760,7 +760,7 @@ function displayCandidates() {
         <div class="candidate-card">
             <div class="candidate-image-wrapper">
                 ${candidate.image ? 
-                    `<img src="/storage/${candidate.image}" class="candidate-image" alt="${candidate.name}">` :
+                    `<img src="/public/storage/${candidate.image}" class="candidate-image" alt="${candidate.name}">` :
                     `<div class="candidate-image-placeholder">
                         <i class="bi bi-person-circle"></i>
                     </div>`
@@ -903,7 +903,7 @@ function editCandidate(id) {
     
     if (candidate.image) {
         document.getElementById('imagePreview').innerHTML = 
-            `<img src="/storage/${candidate.image}" class="img-thumbnail" style="max-width: 200px;">`;
+            `<img src="/public/storage/${candidate.image}" class="img-thumbnail" style="max-width: 200px;">`;
     }
 
     new bootstrap.Modal(document.getElementById('candidateModal')).show();
@@ -918,7 +918,7 @@ function viewDetail(id) {
 
     document.getElementById('detailContent').innerHTML = `
         ${candidate.image ? 
-            `<img src="/storage/${candidate.image}" class="detail-candidate-image" alt="${candidate.name}">` :
+            `<img src="/public/storage/${candidate.image}" class="detail-candidate-image" alt="${candidate.name}">` :
             `<div class="detail-candidate-image candidate-image-placeholder">
                 <i class="bi bi-person-circle" style="font-size: 80px;"></i>
             </div>`

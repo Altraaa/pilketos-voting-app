@@ -318,7 +318,7 @@ function openVoteModal(candidateId) {
   document.getElementById('candidateInfo').innerHTML = `
     <div class="text-center mb-3">
       ${candidate.image ? 
-        `<img src="/storage/${candidate.image}" class="rounded mx-auto d-block" style="max-width: 150px; max-height: 150px; object-fit: cover;" alt="${candidate.name}">` :
+        `<img src="/public/storage/${candidate.image}" class="rounded mx-auto d-block" style="max-width: 150px; max-height: 150px; object-fit: cover;" alt="${candidate.name}">` :
         `<div class="bg-secondary rounded mx-auto d-flex align-items-center justify-content-center" style="width: 150px; height: 150px;">
           <i class="bi bi-person-circle" style="font-size: 4rem; color: #ccc;"></i>
         </div>`
@@ -437,7 +437,7 @@ function displayCandidates() {
       <div class="card shadow rounded-3 overflow-hidden position-relative d-flex flex-column">
         <div class="position-relative">
           ${candidate.image ? 
-            `<img src="/storage/${candidate.image}" class="card-img-top" alt="${candidate.name}">` :
+            `<img src="/public/storage/${candidate.image}" class="card-img-top" alt="${candidate.name}">` :
             `<img src="/images/dashboard.jpg" class="card-img-top" alt="${candidate.name}">`
           }
           <div class="nomor-kandidat">${index + 1}</div>
@@ -509,7 +509,7 @@ function openVoteModal(candidateId) {
   document.getElementById('candidateInfo').innerHTML = `
     <div class="text-center mb-3">
       ${candidate.image ? 
-        `<img src="/storage/${candidate.image}" class="rounded mx-auto d-block" style="max-width: 150px; max-height: 150px; object-fit: cover;" alt="${candidate.name}">` :
+        `<img src="/public/storage/${candidate.image}" class="rounded mx-auto d-block" style="max-width: 150px; max-height: 150px; object-fit: cover;" alt="${candidate.name}">` :
         `<div class="bg-secondary rounded mx-auto d-flex align-items-center justify-content-center" style="width: 150px; height: 150px;">
           <i class="bi bi-person-circle" style="font-size: 4rem; color: #ccc;"></i>
         </div>`

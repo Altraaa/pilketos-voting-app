@@ -73,23 +73,28 @@
     </style>
 </head>
 
+@php
+    $hideNavFooter = request()->is('login') || request()->is('register') || request()->is('forgot-password');
+@endphp
+
 <body style="opacity: 0; transition: opacity 0.6s ease;" onload="document.body.style.opacity='1'">
-    {{-- Header --}}
-    @include('components.header')
+    @if(!$hideNavFooter)
+        @include('components.header')
+    @endif
 
     @include('components.toast')
 
-    {{-- Konten Halaman --}}
     <main>
         @yield('content')
     </main>
 
-    {{-- Footer --}}
-    @include('components.footer')
+    @if(!$hideNavFooter)
+        @include('components.footer')
+    @endif
     
-    <!-- Bootstrap JS Bundle (termasuk Popper) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     document.addEventListener("DOMContentLoaded", () => {

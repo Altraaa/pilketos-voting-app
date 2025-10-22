@@ -167,7 +167,7 @@ function displayResults() {
                     </div>
                     <div class="candidate-info mt-3">
                         ${candidate.image ? 
-                            `<img src="/storage/${candidate.image}" class="candidate-thumb" alt="${candidate.name}">` :
+                            `<img src="/public/storage/${candidate.image}" class="candidate-thumb" alt="${candidate.name}">` :
                             `<div class="candidate-thumb-placeholder">
                                 <i class="bi bi-person-circle"></i>
                             </div>`
@@ -195,7 +195,7 @@ function displayResults() {
                     <div class="row align-items-center">
                         <div class="col-md-4 text-center">
                             ${candidate.image ? 
-                                `<img src="/storage/${candidate.image}" class="candidate-detail-img" alt="${candidate.name}">` :
+                                `<img src="/public/storage/${candidate.image}" class="candidate-detail-img" alt="${candidate.name}">` :
                                 `<div class="candidate-detail-img-placeholder">
                                     <i class="bi bi-person-circle"></i>
                                 </div>`
