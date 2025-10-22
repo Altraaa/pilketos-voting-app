@@ -45,4 +45,10 @@ class VoteService
     {
         return Vote::where('candidate_id', $candidateId)->with('user')->get();
     }
+
+    public function hasUserVoted(int $userId)
+    {
+        $user = User::find($userId);
+        return $user ? $user->has_voted : false;
+    }
 }

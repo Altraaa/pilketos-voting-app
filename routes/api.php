@@ -51,5 +51,6 @@ Route::middleware('auth:sanctum')->group(function () {
     // Vote Routes
     Route::get('/votes', [VoteController::class, 'index']);
     Route::post('/votes', [VoteController::class, 'store']);
+    Route::get('/votes/check', [VoteController::class, 'checkUserVote']);
     Route::get('/candidates/{candidateId}/votes', [VoteController::class, 'showByCandidate']);
 });

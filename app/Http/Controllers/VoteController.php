@@ -47,4 +47,14 @@ class VoteController extends Controller
         $votes = $this->voteService->getVotesByCandidate($candidateId);
         return response()->json($votes);
     }
+    
+    public function checkUserVote(Request $request)
+    {
+        $user = $request->user();
+        $hasVoted = $this->voteService->hasUserVoted($user->id);
+        
+        return response()->json([
+            'has_voted' => $hasVoted
+        ]);
+    }
 }
