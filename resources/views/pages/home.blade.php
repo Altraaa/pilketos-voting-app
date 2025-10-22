@@ -105,6 +105,7 @@ let candidates = [];
 let categories = [];
 let votingEnabled = false;
 let selectedCandidateId = null;
+let userHasVoted = false;
 let statusCheckInterval;
 
 const countdownInterval = setInterval(() => {
@@ -135,11 +136,9 @@ document.addEventListener('DOMContentLoaded', function() {
   
   document.getElementById('confirmVoteBtn').addEventListener('click', submitVote);
   
-  // Start checking voting status every 5 seconds
   statusCheckInterval = setInterval(checkVotingStatus, 5000);
 });
 
-// Clean up on page unload
 window.addEventListener('beforeunload', function() {
   if (statusCheckInterval) {
     clearInterval(statusCheckInterval);
@@ -219,6 +218,23 @@ async function checkVotingStatus() {
       return;
     }
 
+    // Cek status voting pengguna
+    const voteResponse = await fetch(`${API_BASE_URL}/votes/check`, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Accept': 'application/json'
+      },
+      credentials: 'include'
+    });
+
+    if (voteResponse.ok) {
+      const voteData = await voteResponse.json();
+      userHasVoted = voteData.has_voted;
+      updateVoteButtons();
+      updateVotingStatus();
+    }
+
+    // Cek status voting aktif/tidak (kode yang sudah ada)
     const response = await fetch(`${API_BASE_URL}/categories/active`, {
       headers: {
         'Authorization': `Bearer ${token}`,
@@ -228,15 +244,12 @@ async function checkVotingStatus() {
     });
 
     if (response.status === 404) {
-      // Tidak ada kategori aktif
       const newVotingStatus = false;
       
-      // If voting status changed, update UI
       if (newVotingStatus !== votingEnabled) {
         votingEnabled = newVotingStatus;
         updateVotingStatus();
         
-        // Only reload candidates if we have candidates loaded
         if (candidates.length > 0) {
           loadCandidates();
         }
@@ -249,12 +262,10 @@ async function checkVotingStatus() {
       const activeCategories = result.data ? result.data : result;
       const newVotingStatus = activeCategories.length > 0;
       
-      // If voting status changed, update UI
       if (newVotingStatus !== votingEnabled) {
         votingEnabled = newVotingStatus;
         updateVotingStatus();
         
-        // Only reload candidates if we have candidates loaded
         if (candidates.length > 0) {
           loadCandidates();
         }
@@ -262,7 +273,6 @@ async function checkVotingStatus() {
     }
   } catch (error) {
     console.error('Error checking voting status:', error);
-    // Don't show alert for this error as it's a background check
   }
 }
 
@@ -273,7 +283,9 @@ function updateVotingStatus() {
   
   if (votingEnabled) {
     statusIndicator.className = 'status-indicator active';
-    statusText.textContent = 'Voting Aktif - Anda dapat memilih kandidat sekarang';
+    statusText.textContent = userHasVoted ? 
+      'Voting Aktif - Anda sudah melakukan voting' : 
+      'Voting Aktif - Anda dapat memilih kandidat sekarang';
     statusDot.style.backgroundColor = '#4ade80';
   } else {
     statusIndicator.className = 'status-indicator inactive';
@@ -281,23 +293,30 @@ function updateVotingStatus() {
     statusDot.style.backgroundColor = '#f87171';
   }
   
-  // Update all vote buttons if they exist
+  updateVoteButtons();
+}
+
+function updateVoteButtons() {
   const voteButtons = document.querySelectorAll('.vote-btn');
-  if (voteButtons.length > 0) {
-    voteButtons.forEach(button => {
-      if (votingEnabled) {
-        button.classList.remove('btn-secondary', 'disabled');
-        button.classList.add('btn-success');
-        button.disabled = false;
-        button.innerHTML = '<i class="bi bi-check-circle me-2"></i>Pilih Sekarang';
-      } else {
-        button.classList.remove('btn-success');
-        button.classList.add('btn-secondary', 'disabled');
-        button.disabled = true;
-        button.innerHTML = '<i class="bi bi-check-circle me-2"></i>Voting Nonaktif';
-      }
-    });
-  }
+  
+  voteButtons.forEach(button => {
+    if (userHasVoted) {
+      button.classList.remove('btn-success');
+      button.classList.add('btn-secondary', 'disabled');
+      button.disabled = true;
+      button.innerHTML = '<i class="bi bi-check-circle me-2"></i>Sudah Vote';
+    } else if (votingEnabled) {
+      button.classList.remove('btn-secondary', 'disabled');
+      button.classList.add('btn-success');
+      button.disabled = false;
+      button.innerHTML = '<i class="bi bi-check-circle me-2"></i>Pilih Sekarang';
+    } else {
+      button.classList.remove('btn-success');
+      button.classList.add('btn-secondary', 'disabled');
+      button.disabled = true;
+      button.innerHTML = '<i class="bi bi-check-circle me-2"></i>Voting Nonaktif';
+    }
+  });
 }
 
 function openVoteModal(candidateId) {
@@ -406,12 +425,10 @@ async function loadCandidates() {
   }
 }
 
-// Di fungsi displayCandidates, ubah cara mendapatkan nama kategori:
 function displayCandidates() {
   const container = document.getElementById('candidatesContainer');
   const loadingSpinner = document.getElementById('loadingSpinner');
   
-  // Remove loading spinner if it exists
   if (loadingSpinner) {
     loadingSpinner.remove();
   }
@@ -429,9 +446,25 @@ function displayCandidates() {
   }
 
   container.innerHTML = candidates.map((candidate, index) => {
-    // Gunakan candidate.category langsung dari data kandidat
     const category = candidate.category;
     const categoryName = category ? category.name : 'Tidak ada kategori';
+    
+    // Tentukan status tombol berdasarkan kondisi voting
+    let buttonClass = 'btn-secondary disabled';
+    let buttonText = 'Voting Nonaktif';
+    let buttonDisabled = 'disabled';
+    
+    if (votingEnabled) {
+      if (userHasVoted) {
+        buttonClass = 'btn-secondary disabled';
+        buttonText = 'Sudah Vote';
+        buttonDisabled = 'disabled';
+      } else {
+        buttonClass = 'btn-success';
+        buttonText = 'Pilih Sekarang';
+        buttonDisabled = '';
+      }
+    }
     
     return `
     <div class="col-md-5">
@@ -457,16 +490,18 @@ function displayCandidates() {
           <h6 class="fw-semibold mt-3">Misi</h6>
           <div class="mission-text">${formatMission(candidate.mission)}</div>
 
-          <button class="btn vote-btn w-100 mt-auto ${votingEnabled ? 'btn-success' : 'btn-secondary disabled'}" 
+          <button class="btn vote-btn w-100 mt-auto ${buttonClass}" 
                   onclick="openVoteModal(${candidate.id})" 
-                  ${!votingEnabled ? 'disabled' : ''}>
+                  ${buttonDisabled}>
             <i class="bi bi-check-circle me-2"></i>
-            ${votingEnabled ? 'Pilih Sekarang' : 'Voting Nonaktif'}
+            ${buttonText}
           </button>
         </div>
       </div>
     </div>
   `}).join('');
+  
+  updateVoteButtons();
 }
 
 // Format mission text into numbered list
@@ -491,10 +526,14 @@ function formatMission(mission) {
   return `<p>${mission}</p>`;
 }
 
-// Open vote confirmation modal
 function openVoteModal(candidateId) {
   if (!votingEnabled) {
     showAlert('Voting saat ini nonaktif. Silakan tunggu admin mengaktifkan voting.', 'warning');
+    return;
+  }
+  
+  if (userHasVoted) {
+    showAlert('Anda sudah melakukan voting sebelumnya!', 'warning');
     return;
   }
   
@@ -503,7 +542,6 @@ function openVoteModal(candidateId) {
 
   selectedCandidateId = candidateId;
   
-  // Gunakan candidate.category langsung dari data kandidat
   const category = candidate.category;
   const categoryName = category ? category.name : 'Tidak ada kategori';
   
@@ -524,7 +562,6 @@ function openVoteModal(candidateId) {
   new bootstrap.Modal(document.getElementById('konfirmasiModal')).show();
 }
 
-// Submit vote
 async function submitVote() {
   if (!selectedCandidateId) return;
 
@@ -543,7 +580,6 @@ async function submitVote() {
       return;
     }
 
-    // Get current user ID from session/auth
     const userResponse = await fetch('/api/user', {
       headers: {
         'Authorization': `Bearer ${token}`,
@@ -559,7 +595,6 @@ async function submitVote() {
     const userData = await userResponse.json();
     const userId = userData.id;
 
-    // Submit vote
     const response = await fetch(`${API_BASE_URL}/votes`, {
       method: 'POST',
       headers: {
@@ -583,23 +618,27 @@ async function submitVote() {
     const result = await response.json();
 
     if (!response.ok) {
-      // Check if already voted
       if (result.message && result.message.includes('already voted')) {
         showAlert('Anda sudah melakukan voting sebelumnya!', 'warning');
+        // Update status voting pengguna
+        userHasVoted = true;
+        updateVoteButtons();
       } else {
         throw new Error(result.message || 'Failed to submit vote');
       }
     } else {
       showAlert('Vote berhasil! Terima kasih atas partisipasi Anda.', 'success');
       
-      // Close modal
+      // Update status voting pengguna
+      userHasVoted = true;
+      updateVoteButtons();
+      
       const modalElement = document.getElementById('konfirmasiModal');
       const modalInstance = bootstrap.Modal.getInstance(modalElement);
       if (modalInstance) {
         modalInstance.hide();
       }
       
-      // Remove backdrop manually
       setTimeout(() => {
         const backdrop = document.querySelector('.modal-backdrop');
         if (backdrop) {
