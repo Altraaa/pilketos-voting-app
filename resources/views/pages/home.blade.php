@@ -1,13 +1,13 @@
 @extends('layouts.main')
 
-@section('title', 'Pemilihan Ketua OSIS 2025')
+@section('title', 'Pemilihan Ketua OSIS Periode 2026/2027')
 
 @section('content')
 
 <!-- Hero Section -->
 <section class="hero">
   <div class="hero-content">
-    <h2 class="fw-bold">Pemilihan Ketua OSIS 2025</h2>
+    <h2 class="fw-bold">Pemilihan Ketua OSIS Periode 2026/2027</h2>
     <p class="text-white">Suaramu Menentukan Masa Depan Organisasi Kita</p>
 
     <div class="countdown mt-3 d-flex justify-content-center">
@@ -52,7 +52,7 @@
         <li>Konfirmasi pilihan Anda pada popup yang muncul</li>
         <li>Suara yang sudah diberikan tidak dapat diubah</li>
         <li>Hasil pemilihan akan diumumkan setelah periode voting berakhir</li>
-        <li>Voting dibuka mulai tanggal 28 Oktober – 5 November 2025</li>
+        <li>Voting dibuka mulai tanggal 02 Oktober 2026</li>
       </ol>
     </div>
   </div>
@@ -100,7 +100,7 @@
 
 <script>
 const API_BASE_URL = '/api';
-const targetDate = new Date("2025-10-23T10:00:00+08:00").getTime();
+const targetDate = new Date("2026-10-02T07:00:00+08:00").getTime();
 let candidates = [];
 let categories = [];
 let votingEnabled = false;
@@ -337,7 +337,7 @@ function openVoteModal(candidateId) {
   document.getElementById('candidateInfo').innerHTML = `
     <div class="text-center mb-3">
       ${candidate.image ? 
-        `<img src="/public/storage/${candidate.image}" class="rounded mx-auto d-block" style="max-width: 150px; max-height: 150px; object-fit: cover;" alt="${candidate.name}">` :
+        `<img src="/storage/${candidate.image}" class="rounded mx-auto d-block" style="max-width: 150px; max-height: 150px; object-fit: cover;" alt="${candidate.name}">` :
         `<div class="bg-secondary rounded mx-auto d-flex align-items-center justify-content-center" style="width: 150px; height: 150px;">
           <i class="bi bi-person-circle" style="font-size: 4rem; color: #ccc;"></i>
         </div>`
@@ -471,8 +471,8 @@ function displayCandidates() {
       <div class="card shadow rounded-3 overflow-hidden position-relative d-flex flex-column">
         <div class="position-relative">
           ${candidate.image ? 
-            `<img src="/public/storage/${candidate.image}" class="card-img-top" alt="${candidate.name}">` :
-            `<img src="/images/dashboard.jpg" class="card-img-top" alt="${candidate.name}">`
+            `<img src="/storage/${candidate.image}" class="card-img-top" alt="${candidate.name}">` :
+            `<img src="/images/osis3.jpeg" class="card-img-top" alt="${candidate.name}">`
           }
           <div class="nomor-kandidat">${index + 1}</div>
           <div class="category-badge">${categoryName}</div>
@@ -548,7 +548,7 @@ function openVoteModal(candidateId) {
   document.getElementById('candidateInfo').innerHTML = `
     <div class="text-center mb-3">
       ${candidate.image ? 
-        `<img src="/public/storage/${candidate.image}" class="rounded mx-auto d-block" style="max-width: 150px; max-height: 150px; object-fit: cover;" alt="${candidate.name}">` :
+        `<img src="/storage/${candidate.image}" class="rounded mx-auto d-block" style="max-width: 150px; max-height: 150px; object-fit: cover;" alt="${candidate.name}">` :
         `<div class="bg-secondary rounded mx-auto d-flex align-items-center justify-content-center" style="width: 150px; height: 150px;">
           <i class="bi bi-person-circle" style="font-size: 4rem; color: #ccc;"></i>
         </div>`
@@ -691,7 +691,7 @@ function showAlert(message, type) {
 
   /* ===== HERO SECTION ===== */
   .hero {
-    background: url('{{ asset('images/dashboard.jpg') }}') center center / cover no-repeat;
+    background: url('{{ asset('images/osis3.jpeg') }}') center center / cover no-repeat;
     position: relative;
     text-align: center;
     color: white;

@@ -21,7 +21,7 @@ class UsersExport implements FromCollection, WithHeadings, WithMapping, WithStyl
     {
         // Ambil data user dengan debugging
         try {
-            $this->users = User::select('unique_code', 'password')->get();
+            $this->users = User::select('unique_code', 'plain_password')->where('role', 'user')->get();
             
             // Logging untuk debugging
             Log::info('UsersExport: Jumlah user yang diambil: ' . $this->users->count());
@@ -64,7 +64,7 @@ class UsersExport implements FromCollection, WithHeadings, WithMapping, WithStyl
     {
         return [
             $user->unique_code,
-            $user->password,
+            $user->plain_password ?? '(tidak tersedia)',
         ];
     }
 

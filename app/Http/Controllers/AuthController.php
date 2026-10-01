@@ -36,6 +36,10 @@ class AuthController extends Controller
 
             Auth::loginUsingId($result['user']['id']);
 
+            if ($result['user']['role'] === 'admin') {
+                return redirect()->route('admin.user')->with('success', 'Login berhasil sebagai Admin!');
+            }
+
             return redirect()->route('home')->with('success', 'Login berhasil!');
 
         } catch (\Illuminate\Validation\ValidationException $e) {

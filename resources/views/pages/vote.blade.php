@@ -6,7 +6,7 @@
 
 <section class="hero-results">
     <div class="hero-content">
-        <h2 class="fw-bold mb-3">Hasil Pemilihan Ketua OSIS 2025</h2>
+        <h2 class="fw-bold mb-3">Hasil Pemilihan Ketua OSIS Periode 2026/2027</h2>
         <p class="lead mb-4">Pemungutan Suara Berakhir Dalam</p>
         
         <div class="countdown-section">
@@ -68,7 +68,7 @@
 </section>
 
 <script>
-const targetDate = new Date("2025-10-23T10:00:00+08:00").getTime();
+const targetDate = new Date("2026-10-03T00:00:00+08:00").getTime();
 let candidates = [];
 let updateInterval;
 
@@ -167,7 +167,7 @@ function displayResults() {
                     </div>
                     <div class="candidate-info mt-3">
                         ${candidate.image ? 
-                            `<img src="/public/storage/${candidate.image}" class="candidate-thumb" alt="${candidate.name}">` :
+                            `<img src="/storage/${candidate.image}" class="candidate-thumb" alt="${candidate.name}">` :
                             `<div class="candidate-thumb-placeholder">
                                 <i class="bi bi-person-circle"></i>
                             </div>`
@@ -195,7 +195,7 @@ function displayResults() {
                     <div class="row align-items-center">
                         <div class="col-md-4 text-center">
                             ${candidate.image ? 
-                                `<img src="/public/storage/${candidate.image}" class="candidate-detail-img" alt="${candidate.name}">` :
+                                `<img src="/storage/${candidate.image}" class="candidate-detail-img" alt="${candidate.name}">` :
                                 `<div class="candidate-detail-img-placeholder">
                                     <i class="bi bi-person-circle"></i>
                                 </div>`

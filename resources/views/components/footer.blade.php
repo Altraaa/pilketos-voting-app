@@ -28,7 +28,7 @@
 
                 <div class="mb-3">
                     <p class="mb-1 fw-semibold" style="font-size: 0.9rem;">Kontak:</p>
-                    <p class="text-light mb-0" style="font-size: 0.85rem; opacity: 0.9;">089524606163 (Wibawa)</p>
+                    <p class="text-light mb-0" style="font-size: 0.85rem; opacity: 0.9;">089505952612 (Yoga Aswin)</p>
                 </div>
 
                 <div>

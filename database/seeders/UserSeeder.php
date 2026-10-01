@@ -21,5 +21,9 @@ class UserSeeder extends Seeder
             'role' => 'admin',
             'has_voted' => false,
         ]);
+
+        /**
+        * OSKAOFFICIAL-26 -> oskaofficial@26.
+        */
     }
 }
