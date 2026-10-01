@@ -48,7 +48,8 @@ class UserService
             $user = User::create([
                 'name' => 'User ' . strtoupper(Str::random(6)),
                 'unique_code' => $uniqueCode,
-                'password' => $password,
+                'password' => Hash::make($password),
+                'plain_password' => $password,
                 'role' => 'user',
                 'has_voted' => false,
             ]);

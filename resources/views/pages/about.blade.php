@@ -21,16 +21,19 @@
       <div class="swiper mySwiper">
         <div class="swiper-wrapper">
           <div class="swiper-slide">
-            <img src="{{ asset('images/osis2.JPG') }}" alt="Gambar 1">
+            <img src="{{ asset('images/osis2.jpeg') }}" alt="Gambar 1">
           </div>
           <div class="swiper-slide">
-            <img src="{{ asset('images/osis5.JPG') }}" alt="Gambar 2">
+            <img src="{{ asset('images/osis3.jpeg') }}" alt="Gambar 2">
           </div>
           <div class="swiper-slide">
-            <img src="{{ asset('images/osis3.JPG') }}" alt="Gambar 3">
+            <img src="{{ asset('images/osis4.jpeg') }}" alt="Gambar 3">
           </div>
           <div class="swiper-slide">
-            <img src="{{ asset('images/osis1.jpg') }}" alt="Gambar 4">
+            <img src="{{ asset('images/osis1.jpeg') }}" alt="Gambar 4">
+          </div>
+          <div class="swiper-slide">
+            <img src="{{ asset('images/osis5.jpeg') }}" alt="Gambar 4">
           </div>
         </div>
       </div>
@@ -51,12 +54,6 @@
         </p>
       <div class="swiper mySwiper">
         <div class="swiper-wrapper">
-          <div class="swiper-slide">
-            <img src="{{ asset('images/thumbnail8.png') }}" alt="Gambar 1">
-          </div>
-          <div class="swiper-slide">
-            <img src="{{ asset('images/thumbnail7.jpg') }}" alt="Gambar 2">
-          </div>
           <div class="swiper-slide">
             <img src="{{ asset('images/thumbnail4.png') }}" alt="Gambar 3">
           </div>

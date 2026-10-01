@@ -1083,8 +1083,8 @@ function displayUsers(users) {
             </td>
             <td>
                 <div class="password-field">
-                    <span class="password-text" id="password-${user.id}">${user.password}</span>
-                    <button class="btn-copy" onclick="copyToClipboard('${user.password}', 'password-${user.id}')">
+                    <span class="password-text" id="password-${user.id}">${user.plain_password ?? '-'}</span>
+                    <button class="btn-copy" onclick="copyToClipboard('${user.plain_password ?? ''}', 'password-${user.id}')">
                         <i class="bi bi-clipboard"></i>
                     </button>
                 </div>
@@ -1520,8 +1520,8 @@ async function showUserDetail(userId) {
                         <div class="detail-item">
                             <label class="text-light">Password</label>
                             <div class="password-display">
-                                <code class="text-white">${user.password}</code>
-                                <button class="btn-copy" onclick="copyToClipboard('${user.password}')" title="Salin password">
+                                <code class="text-white">${user.plain_password ?? '-'}</code>
+                                <button class="btn-copy" onclick="copyToClipboard('${user.plain_password ?? ''}')" title="Salin password">
                                     <i class="bi bi-clipboard"></i>
                                 </button>
                             </div>
